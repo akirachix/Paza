@@ -28,8 +28,8 @@ class Leader(models.Model):
 
 
 
-class Notifications(models.Model):
-    name_neighbourhood=models.CharField(max_length=20)
+class Notification(models.Model):
+    neighbourhood=models.CharField(max_length=20)
     date_of_meeting=models.DateTimeField(null=True)
     tittle_of_meeting=models.CharField(max_length=20)
     status=models.CharField(max_length=20)
@@ -43,11 +43,11 @@ class Posts(models.Model):
     video = models.FileField(null=True)
     time_date = models.DateTimeField(null=True)
 
-class Comment(models.Model):
-    tittle=models.TextField(max_length=50,null=True) 
-    description=models.TextField(max_length=250, null=True) 
-    sector=models.TextField(max_length=30, null=True)
-    image = models.ImageField(null=True)
-    video = models.FileField(null=True)
-    time_date = models.DateTimeField(null=True)    
+# class Comment(models.Model):
+#     head=models.TextField(max_length=50,null=True) 
+#     # description=models.TextField(max_length=250, null=True) 
+    # sector=models.TextField(max_length=30, null=True)
+    # image = models.ImageField(null=True)
+    # video = models.FileField(null=True)
+    # time_date = models.DateTimeField(null=True)    
 

@@ -3,6 +3,7 @@ from rest_framework.authtoken.models import Token
 from django.shortcuts import render
 from paza import models
 from .serializers import *
+from knox.models import AuthToken
 from django.http import HttpResponse, JsonResponse
 from rest_framework.parsers import JSONParser
 from . import serializers
@@ -19,27 +20,28 @@ from rest_framework.authtoken.views import ObtainAuthToken
 
 
 class LeaderRegisterViewSet(generics.GenericAPIView):
-    serializer_class = serializers.LeaderRegisterSerializer
+    serializer_class = serializers.LeaderRegisterModelSerializer
     queryset =  models.Leader.objects.all()
 
-    def post(self, request,format=None):
+    def get(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         leader = serializer.save()
-        models.Leader.objects.create_user(username=leader.username , password=leader.password)
+        User.objects.create_user(username=leader.username , password=leader.password)
         return Response({
-        # "leader": serializers.LeaderSerializer(leader, context=self.get_serializer_context()).data,
+        "user": LeaderSerializer(leader, context=self.get_serializer_context()).data,
+        "token": AuthToken.objects.create(leader)[1]
         })
 
-    def get(self, request, *args, **kwargs):
-        leaders = models.Leader.objects.all()
-        leader_serializer=serializers.LeaderSerializer(leaders,many=True)
-        return JsonResponse(leader_serializer.data,safe=False)
+    def post(self, request, *args, **kwargs):
+        leader = models.Leader.objects.all()
+        leader_serializer=serializers.LeaderSerializer(leader,many=True)
+        return Response(leader_serializer.data,safe=False)
 
 
 
 class ResidentRegisterViewset(generics.GenericAPIView):
-    serializer_class = serializers.ResidentSerializer
+    serializer_class = serializers.ResidentRegisterModelSerializer
     queryset =  models.Resident.objects.all()
 
     def post(self, request, *args, **kwargs):
@@ -64,15 +66,23 @@ class PostsViewset(generics.GenericAPIView):
         return JsonResponse(post_serializer.data,safe=False)
 
 
-class CommentViewset(generics.GenericAPIView): 
-    def get(self, request, *args, **kwargs):
-        posts = models.Comment.objects.all()
-        post_serializer=serializers.CommentSerializer(posts,many=True)
-        return JsonResponse(post_serializer.data,safe=False)        
-
-
 
 # Register API
+
+# Register API
+class RegisterAPI(generics.GenericAPIView):
+    serializer_class = RegisterSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        return Response({
+        "user": UserSerializer(user, context=self.get_serializer_context()).data,
+        "token": AuthToken.objects.create(user)[1]
+        })
+
+
 class LoginAPI(ObtainAuthToken):
     permission_classes = (permissions.AllowAny,)
     def post(self, request, ):
@@ -85,7 +95,6 @@ class LoginAPI(ObtainAuthToken):
             'body': 'login successful',
             "token": token.key
         })
-
 
 
 
