@@ -1,3 +1,4 @@
+from optparse import TitledHelpFormatter
 from django.db import models
 
 # Create your models here.
@@ -33,7 +34,8 @@ class Notification(models.Model):
     date_of_meeting=models.DateTimeField(null=True)
     tittle_of_meeting=models.CharField(max_length=20)
     status=models.CharField(max_length=20,null=True)
-    # date_and_time=models.DateTimeField(null=True)
+    date_and_time=models.DateTimeField(null=True)
+
 
 class Posts(models.Model):
     tittle=models.TextField(max_length=250,null=True) 
@@ -49,4 +51,12 @@ class Comment(models.Model):
     description=models.TextField(max_length=250, null=True) 
     sector=models.TextField(max_length=30, null=True)
     time_date = models.DateTimeField(null=True)    
+
+class Forum(models.Model):
+    tittle=models.CharField(max_length=20) 
+    description=models.TextField(max_length=250, null=True) 
+    time_date = models.DateTimeField(null=True)
+    place=models.CharField(max_length=20) 
+    moderator=models.CharField(max_length=20) 
+
 

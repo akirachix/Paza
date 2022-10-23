@@ -1,6 +1,6 @@
 
 
-from paza.models import  Leader, Resident, Posts, Resident
+from paza.models import  Forum, Leader, Resident, Posts, Resident,Comment
 from rest_framework import serializers
 from django.contrib.auth.models import User
 
@@ -29,7 +29,23 @@ class PostsSerializer(serializers.ModelSerializer):
         model = Posts
         fields = ("tittle", "description", "sector", "image","time_date","video")
 
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ("head", "description", "sector","time_date")
 
+
+class ForumSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Forum
+        fields = ("tittle", "description", "moderator","time_date")
+
+
+
+
+
+
+    
 
     
 

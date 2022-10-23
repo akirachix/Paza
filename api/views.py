@@ -11,15 +11,16 @@ from knox.models import AuthToken
 from .serializers import UserSerializer
 from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework import viewsets
-from paza.models import Resident, Leader, Resident, Posts
+from paza.models import Resident, Leader, Resident, Posts,Comment,Forum
 from django.contrib.auth.models import User
 from django.contrib.auth import login
 from rest_framework import permissions
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.views import LoginView as KnoxLoginView
+from .serializers import ResidentSerializer,UserSerializer, LeaderSerializer, PostsSerializer,CommentSerializer,ForumSerializer
 
 
-from .serializers import ResidentSerializer,UserSerializer, LeaderSerializer, PostsSerializer
+
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -40,6 +41,14 @@ class PostsViewSet(viewsets.ModelViewSet):
     queryset = Posts.objects.all()
     serializer_class = PostsSerializer
 
+class CommentViewSet(viewsets.ModelViewSet):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
+
+class ForumViewSet(viewsets.ModelViewSet):
+    queryset = Forum.objects.all()
+    serializer_class = ForumSerializer
 
 class LoginAPI(KnoxLoginView):
     permission_classes = (permissions.AllowAny,)
