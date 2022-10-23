@@ -1,17 +1,28 @@
+
+from django.urls import path, include
+from rest_framework import routers
+from .views import LeaderViewSet, UserViewSet, ResidentViewSet, PostsViewSet
+from knox import views as knox_views
+from .views import LoginAPI
 from django.urls import path
-from . import views
+
+
+
+
+
+
+router = routers.DefaultRouter()
+router.register(r"User", UserViewSet)
+router.register(r"leader", LeaderViewSet)
+router.register(r"resident", ResidentViewSet)
+router.register(r"posts", PostsViewSet)
 
 
 urlpatterns = [
-
-    path('leaders/',views.LeaderRegisterViewSet.as_view(), name='leaders' ),
-    path('login/', views.LoginAPI.as_view(), name='login'),
-    path('residents/',views.ResidentRegisterViewset.as_view(),name='residents'),
-    path('posts/',views.PostsViewset.as_view(),name='posts'),
-    path('api/register/', views.RegisterAPI.as_view(), name='register'),
+    path("", include(router.urls)),
+    path('login/', LoginAPI.as_view(), name='login'),
 
     
-
 
 ]
 
