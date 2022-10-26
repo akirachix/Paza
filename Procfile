@@ -1,1 +1,1 @@
-web: gunicorn Sikika.wsgi --log-file -
+web gunicorn Sikika.wsgi --log-file -
