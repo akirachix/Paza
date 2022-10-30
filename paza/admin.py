@@ -1,18 +1,18 @@
 from django.contrib import admin
-from .models import Resident,Leader,Notification,Posts,Comment,Forum
+from .models import Resident,Leader,Notification,Comment,Forum,Posts
 
 
 class ResidentAdmin(admin.ModelAdmin):
-    list_display=('first_name','last_name','county','password','neighbourhood_associattion','username')
-    search_fields=('first_name','last_name','county','password','neighbourhood_associattion','username')
+    list_display=('first_name','last_name','county','password')
+    search_fields=('first_name','last_name','county','password')
 admin.site.register(Resident,ResidentAdmin)
 
 
 
-class PostsAdmin(admin.ModelAdmin):
-    list_display=('tittle','description','sector','image','video','time_date')
-    search_fields=('tittle','description','sector','image','video','time_date')
-admin.site.register(Posts,PostsAdmin)
+class PostAdmin(admin.ModelAdmin):
+    list_display=('image_name','image_caption','created','image','author', 'likes')
+    search_fields=('image_name','image_caption','created','image','author', 'likes')
+admin.site.register(Posts,PostAdmin)
 
 
 class LeaderAdmin(admin.ModelAdmin):
@@ -27,8 +27,8 @@ admin.site.register(Notification,NotificationAdmin)
 
 
 class CommentAdmin(admin.ModelAdmin):
-    list_display=('head','description','action','sector','time_date')
-    search_fields=('head','description','sector''time_date',)
+    list_display=('body','created','post','author',)
+    search_fields=('body','created','post','author',)
 admin.site.register(Comment,CommentAdmin)
 
 
@@ -37,3 +37,4 @@ class ForumAdmin(admin.ModelAdmin):
     list_display=('tittle','description','moderator','place','time_date')
     search_fields=('tittle','description','moderator','place','time_date',)
 admin.site.register(Forum,ForumAdmin)
+

@@ -1,5 +1,5 @@
-from optparse import TitledHelpFormatter
 from django.db import models
+from cloudinary.models import CloudinaryField
 
 # Create your models here.
 class Resident(models.Model):
@@ -38,19 +38,31 @@ class Notification(models.Model):
 
 
 class Posts(models.Model):
-    tittle=models.TextField(max_length=250,null=True) 
-    description=models.TextField(max_length=250, null=True) 
-    sector=models.TextField(max_length=30, null=True)
-    image = models.ImageField(null=True)
-    video = models.FileField(null=True)
-    time_date = models.DateTimeField(null=True)
+    image = CloudinaryField(null=True)
+    image_name = models.CharField(max_length = 100,null=True)
+    image_caption = models.TextField(max_length = 500,null=True)
+    created = models.DateTimeField(auto_now_add = True,null=True)
+    author = models.ForeignKey(Resident, on_delete = models.CASCADE,null=True)
+    likes = models.IntegerField(null = True, default = 0)
+
+    def __str__(self):
+        return self.image_name
+
+    def delete(self):
+        self.delete()
 
 class Comment(models.Model):
-    head=models.TextField(max_length=50,null=True)
-    action=models.CharField(max_length=20) 
-    description=models.TextField(max_length=250, null=True) 
-    sector=models.TextField(max_length=30, null=True)
-    time_date = models.DateTimeField(null=True)    
+    body = models.TextField(null=True)
+    created = models.DateTimeField(null=True)
+    post = models.ForeignKey('Posts', on_delete = models.CASCADE,null=True)
+    author = models.ForeignKey(Resident, on_delete = models.CASCADE,null=True)
+
+    def __str__(self):
+        return self.post
+
+class NewPost(models.Model):
+    image = CloudinaryField('image')
+
 
 class Forum(models.Model):
     tittle=models.CharField(max_length=20) 
