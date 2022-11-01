@@ -1,3 +1,4 @@
+from trace import Trace
 from django.db import models
 from cloudinary.models import CloudinaryField
 
@@ -61,14 +62,26 @@ class Comment(models.Model):
         return self.post
 
 class NewPost(models.Model):
-    image = CloudinaryField('image')
+    image = CloudinaryField('image') 
 
 
 class Forum(models.Model):
     tittle=models.CharField(max_length=20) 
-    description=models.TextField(max_length=250, null=True) 
-    time_date = models.DateTimeField(null=True)
-    place=models.CharField(max_length=20) 
-    moderator=models.CharField(max_length=20) 
+    name=models.CharField(max_length=200,null=True )
+    topic= models.CharField(max_length=300,null=True)
+    description = models.CharField(max_length=1000,blank=True,null=True)
+    date_created=models.DateTimeField(auto_now_add=True,null=True)
+    
+    def __str__(self):
+        return str(self.topic)
+
+
+class Discussion(models.Model):
+    forum = models.ForeignKey(Forum,blank=True,on_delete=models.CASCADE)
+    discuss = models.CharField(max_length=1000)
+ 
+    def __str__(self):
+        return str(self.forum)
+
 
 

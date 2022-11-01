@@ -38,7 +38,7 @@ class CommentSerializer(serializers.ModelSerializer):
 class ForumSerializer(serializers.ModelSerializer):
     class Meta:
         model = Forum
-        fields = ("tittle", "description", "moderator","time_date")
+        fields = ('tittle','description','date_created','topic','name')
 
         
 

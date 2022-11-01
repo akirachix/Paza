@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Resident,Leader,Notification,Comment,Forum,Posts
+from .models import Resident,Leader,Notification,Comment,Forum,Posts,Discussion
 
 
 class ResidentAdmin(admin.ModelAdmin):
@@ -34,7 +34,11 @@ admin.site.register(Comment,CommentAdmin)
 
 
 class ForumAdmin(admin.ModelAdmin):
-    list_display=('tittle','description','moderator','place','time_date')
-    search_fields=('tittle','description','moderator','place','time_date',)
+    list_display=('tittle','description','date_created','topic','name')
+    search_fields=('tittle','description','date_created','name')
 admin.site.register(Forum,ForumAdmin)
 
+class DiscussionAdmin(admin.ModelAdmin):
+    list_display=('forum','discuss')
+    search_fields=('forum','discuss')
+admin.site.register(Discussion)
