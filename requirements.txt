@@ -10,6 +10,7 @@ cryptography==38.0.1
 dj-database-url==1.0.0
 Django==4.1.2
 django-heroku==0.3.1
+django-cors-headers==3.13.0
 django-rest-knox==4.2.0
 djangorestframework==3.14.0
 drf-yasg==1.21.4
