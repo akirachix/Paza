@@ -2,6 +2,7 @@ asgiref==3.5.2
 backports.zoneinfo==0.2.1
 certifi==2022.9.24
 cffi==1.15.1
+cloudinary==1.30.0
 charset-normalizer==2.1.1
 coreapi==2.3.3
 coreschema==0.0.4
