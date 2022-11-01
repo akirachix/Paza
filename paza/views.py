@@ -3,18 +3,6 @@ from paza.forms import CreateInDiscussion, CreateInForum
 from .models import * 
 from .forms import * 
 
-
-def home(request):
-    forums=Forum.objects.all()
-    count=forums.count()
-    discussions=[]
-    for i in forums:
-        discussions.append(i.discussion_set.all())
- 
-    context={'forums':forums,
-              'count':count,
-              'discussions':discussions}
-    return render(request,'home.html',context)
  
 def addInForum(request):
     form = CreateInForum()
